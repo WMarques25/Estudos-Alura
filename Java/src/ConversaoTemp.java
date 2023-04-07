@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class DesafioConversaoTemp {
+public class ConversaoTemp {
     public static void main(String[] args) throws Exception {
         // Variaveis
         float tc;
