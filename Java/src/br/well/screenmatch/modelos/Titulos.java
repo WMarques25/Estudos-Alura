@@ -1,7 +1,6 @@
 package br.well.screenmatch.modelos;
 
-
-public class Filme{
+public class Titulos {
     private String nome;
     private int anoDeLancamento;
     private int totalDeAvaliacoes;
@@ -65,5 +64,4 @@ public class Filme{
     public boolean isIncluidoNoPlano() {
         return this.incluidoNoPlano;
     }
-    
 }
