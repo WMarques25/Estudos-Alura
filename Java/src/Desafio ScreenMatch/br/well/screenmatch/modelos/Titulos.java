@@ -9,6 +9,13 @@ public class Titulos {
     private boolean incluidoNoPlano;
     
     
+    
+    public Titulos(String nome, int anoDeLancamento, boolean incluidoNoPlano) {
+        this.nome = nome;
+        this.anoDeLancamento = anoDeLancamento;
+        this.incluidoNoPlano = incluidoNoPlano;
+    }
+
     public void exibeFichaTecnica(){
         System.out.println(String.format("""
             Nome: %s (%d)
