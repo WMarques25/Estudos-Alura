@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 import br.well.screenmatch.calculos.CalculadoraDeTempo;
 import br.well.screenmatch.calculos.Recomendacao;
 import br.well.screenmatch.modelos.Episodio;
@@ -54,6 +56,33 @@ public class ScreenMatch{
         episodio.setTotalDeVisualizacoes(101);
         recomendacao.filtra(episodio);
 
-        
+        Filme filme3 = new Filme();
+        filme3.setNome("Vingadores: Era de Ultron");
+        filme3.setAnoDeLancamento(2015);
+        filme3.setDuracaoEmMinutos(141);
+        filme3.setIncluidoNoPlano(true);
+        filme3.avalia(8);
+        filme3.avalia(4);
+        filme3.avalia(1);
+        filme3.exibeFichaTecnica();
+
+        Filme filme4 = new Filme();
+        filme4.setNome("Vingadores");
+        filme4.setAnoDeLancamento(2012);
+        filme4.setDuracaoEmMinutos(143);
+        filme4.setIncluidoNoPlano(true);
+        filme4.avalia(8);
+        filme4.avalia(6);
+        filme4.avalia(9);
+        filme4.exibeFichaTecnica();
+
+        ArrayList<Filme> listaDeFilmes = new ArrayList<Filme>();
+        listaDeFilmes.add(filme);
+        listaDeFilmes.add(filme2);
+        listaDeFilmes.add(filme3);
+        listaDeFilmes.add(filme4);
+        System.out.println("Tamanho da lista: " + listaDeFilmes.size());
+        System.out.println("Filme 1: " + listaDeFilmes.get(0).getNome());
+        System.out.println(listaDeFilmes);
     }
 }

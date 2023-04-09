@@ -1,7 +1,7 @@
 package br.well.screenmatch.calculos;
 
 public class Recomendacao {
-    private String recomendacao;
+    // private String recomendacao;
 
     public void filtra(Classificavel classificavel){
         if (classificavel.getClassificacao() >= 4) {
