@@ -1,14 +1,12 @@
 package br.well.screenmatch.modelos;
 
-public class Titulos {
+public class Titulos implements Comparable<Titulos>{
     private String nome;
     private int anoDeLancamento;
     private int totalDeAvaliacoes;
     private double duracaoEmMinutos;
     private double somaDasAvaliacoes;
     private boolean incluidoNoPlano;
-    
-    
     
     public Titulos(String nome, int anoDeLancamento, boolean incluidoNoPlano) {
         this.nome = nome;
@@ -70,5 +68,10 @@ public class Titulos {
 
     public boolean isIncluidoNoPlano() {
         return this.incluidoNoPlano;
+    }
+
+    @Override
+    public int compareTo(Titulos outro) {
+        return this.getNome().compareTo(outro.getNome());
     }
 }

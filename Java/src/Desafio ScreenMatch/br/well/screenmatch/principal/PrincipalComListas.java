@@ -1,6 +1,8 @@
 package br.well.screenmatch.principal;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import br.well.screenmatch.modelos.Filme;
 import br.well.screenmatch.modelos.Serie;
@@ -37,10 +39,25 @@ public class PrincipalComListas {
         assistidos.add(filme4);
         assistidos.add(theWitcher);
 
+        // Ordenando por nome
+        Collections.sort(assistidos);
+
         for (Titulos titulo : assistidos) {
             System.out.print(titulo);
             if (titulo instanceof Filme f)
                 System.out.println("\nClassificação: " + f.getClassificacao());
+            else
+                System.out.println();
+        }
+
+        // Ordenando por ano de lançamento
+        assistidos.sort(Comparator.comparing(Titulos::getAnoDeLancamento));
+        for (Titulos titulo : assistidos) {
+            System.out.print(titulo);
+            if (titulo instanceof Filme f)
+                System.out.println("\nClassificação: " + f.getClassificacao());
+            else
+                System.out.println();
         }
     }
 }
