@@ -2,6 +2,8 @@ package br.well.screenmatch.modelos;
 
 import com.google.gson.annotations.SerializedName;
 
+import br.well.screenmatch.exception.AnoMaiorQueQuatroDigitosException;
+
 public class Titulos implements Comparable<Titulos>{
     @SerializedName("Title")
     private String nome;
@@ -19,7 +21,11 @@ public class Titulos implements Comparable<Titulos>{
     }
 
     public Titulos(TituloOmdb t) {
-        this.nome = t.title(); 
+        this.nome = t.title();
+        if(t.year().length() > 4){
+            throw new AnoMaiorQueQuatroDigitosException("Ano maior que 4 dígitos: " + t.year());
+            
+        } 
         this.anoDeLancamento = Integer.valueOf(t.year());
         this.duracaoEmMinutos = Double.valueOf(t.runtime().substring(0, 2));
     }
