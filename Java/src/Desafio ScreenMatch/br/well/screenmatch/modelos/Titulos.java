@@ -27,7 +27,7 @@ public class Titulos implements Comparable<Titulos>{
             
         } 
         this.anoDeLancamento = Integer.valueOf(t.year());
-        this.duracaoEmMinutos = Double.valueOf(t.runtime().substring(0, 2));
+        this.duracaoEmMinutos = Double.valueOf(t.runtime().substring(0, 3));
     }
 
     public void exibeFichaTecnica(){

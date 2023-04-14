@@ -19,7 +19,7 @@ import br.well.screenmatch.modelos.TituloOmdb;
 import br.well.screenmatch.modelos.Titulos;
 
 public class PrincipalBusca {
-    public static void main(String[] args) throws IOException, InterruptedException {
+    public static void main(String[] args) throws Exception {
         Scanner sc = new Scanner(System.in);
         String nome = " ";
         List<Titulos> titulos = new ArrayList<>();
@@ -41,13 +41,9 @@ public class PrincipalBusca {
             try {
                 String endereço = "https://www.omdbapi.com/?t=" + nome.replace(" ", "+") + "&apikey=585c8098";
 
-                // TODO - Criar uma classe para fazer a requisição
-                HttpClient cliente = HttpClient.newHttpClient();
-                HttpRequest request = HttpRequest.newBuilder()
-                        .uri(URI.create(endereço)).build();
-                HttpResponse<String> response = cliente.send(request, HttpResponse.BodyHandlers.ofString());
-
-                String json = response.body();
+                HttpCliente cliente = new HttpCliente(endereço);
+                
+                String json = cliente.getBody();
                 System.out.println(json + "\n\tjson \n");
 
                 TituloOmdb t1Omdb = gson.fromJson(json, TituloOmdb.class);
