@@ -59,4 +59,47 @@ public class TesteDescontos {
         assertEquals(new BigDecimal("60.00"), valor);
     }
 
+    // Testes de desconto extra
+    @Test
+    public void deveCalcularDescontoExtraEmAnalise() {
+        Orcamento orcamento = new Orcamento(new BigDecimal("100"), 10);
+        orcamento.aplicarDescontoExtra();
+        assertEquals(new BigDecimal("95.00"), orcamento.getValor());
+    }
+
+    @Test
+    public void deveCalcularDescontoExtraAprovado() {
+        Orcamento orcamento = new Orcamento(new BigDecimal("100"), 10);
+        orcamento.aprovar();
+        orcamento.aplicarDescontoExtra();
+        assertEquals(new BigDecimal("98.00"), orcamento.getValor());
+    }
+
+    @Test
+    public void deveCalcularDescontoExtraFinalizado() {
+        Orcamento orcamento = new Orcamento(new BigDecimal("100"), 10);
+        orcamento.aprovar();
+        orcamento.finalizar();
+        orcamento.aplicarDescontoExtra();
+        assertEquals(new BigDecimal("100.00"), orcamento.getValor());
+    }
+
+    @Test
+    public void deveCalcularDescontoExtraAprovadoEFinalizado() {
+        Orcamento orcamento = new Orcamento(new BigDecimal("100"), 10);
+        orcamento.aprovar();
+        orcamento.aplicarDescontoExtra();
+        orcamento.finalizar();
+        orcamento.aplicarDescontoExtra();
+        assertEquals(new BigDecimal("98.00"), orcamento.getValor());
+    }
+
+    @Test
+    public void deveCalcularDescontoExtraReprovado() {
+        Orcamento orcamento = new Orcamento(new BigDecimal("100"), 10);
+        orcamento.reprovar();
+        orcamento.aplicarDescontoExtra();
+        assertEquals(new BigDecimal("100.00"), orcamento.getValor());
+    }
+
 }
