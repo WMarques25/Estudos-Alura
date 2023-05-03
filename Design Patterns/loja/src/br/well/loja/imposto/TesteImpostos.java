@@ -13,16 +13,32 @@ public class TesteImpostos {
     public void deveCalcularImpostoICMS() {
         Orcamento orcamento = new Orcamento(new BigDecimal("100"), 1);
         CalculadoraDeImposto calculadora = new CalculadoraDeImposto();
-        BigDecimal valor = calculadora.calcular(orcamento, new ICMS());
+        BigDecimal valor = calculadora.calcular(orcamento, new ICMS(null));
         assertEquals(new BigDecimal("10.00"), valor);
+    }
+
+    @Test
+    public void deveCalcularImpostoICMSeISS() {
+        Orcamento orcamento = new Orcamento(new BigDecimal("100"), 1);
+        CalculadoraDeImposto calculadora = new CalculadoraDeImposto();
+        BigDecimal valor = calculadora.calcular(orcamento, new ICMS(new ISS(null)));
+        assertEquals(new BigDecimal("16.00"), valor);
     }
 
     @Test
     public void deveCalcularImpostoISS() {
         Orcamento orcamento = new Orcamento(new BigDecimal("100"), 1);
         CalculadoraDeImposto calculadora = new CalculadoraDeImposto();
-        BigDecimal valor = calculadora.calcular(orcamento, new ISS());
+        BigDecimal valor = calculadora.calcular(orcamento, new ISS(null));
         assertEquals(new BigDecimal("6.00"), valor);
+    }
+
+    @Test
+    public void deveCalcularImpostoISSeICMS() {
+        Orcamento orcamento = new Orcamento(new BigDecimal("100"), 1);
+        CalculadoraDeImposto calculadora = new CalculadoraDeImposto();
+        BigDecimal valor = calculadora.calcular(orcamento, new ICMS(new ISS(null)));
+        assertEquals(new BigDecimal("16.00"), valor);
     }
 
 }
