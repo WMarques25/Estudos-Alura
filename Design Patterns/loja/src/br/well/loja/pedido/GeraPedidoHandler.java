@@ -16,11 +16,10 @@ public class GeraPedidoHandler {
     }
     
     public void execute(GeraPedido dados) {
-        Orcamento orcamento = new Orcamento(dados.getValorOrcamento(), dados.getQuantidadeItens());
+        Orcamento orcamento = dados.getOrcamento();
         pedido = new Pedido(dados.getCliente(), LocalDateTime.now(), orcamento);
         
         acoes.forEach(a -> a.executarAcao(pedido));
-
     }
 
     public Pedido getPedido() {

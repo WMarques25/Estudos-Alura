@@ -1,6 +1,5 @@
 package br.well.loja.http;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Map;
