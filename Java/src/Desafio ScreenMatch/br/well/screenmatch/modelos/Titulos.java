@@ -1,19 +1,33 @@
 package br.well.screenmatch.modelos;
 
-public class Titulos implements Comparable<Titulos> {
+import com.google.gson.annotations.SerializedName;
+
+import br.well.screenmatch.exception.AnoMaiorQueQuatroDigitosException;
+
+public class Titulos implements Comparable<Titulos>{
+    @SerializedName("Title")
     private String nome;
+    @SerializedName("Year")
     private int anoDeLancamento;
     private int totalDeAvaliacoes;
     private double duracaoEmMinutos;
     private double somaDasAvaliacoes;
     private boolean incluidoNoPlano;
     
-    
-    
     public Titulos(String nome, int anoDeLancamento, boolean incluidoNoPlano) {
         this.nome = nome;
         this.anoDeLancamento = anoDeLancamento;
         this.incluidoNoPlano = incluidoNoPlano;
+    }
+
+    public Titulos(TituloOmdb t) {
+        this.nome = t.title();
+        if(t.year().length() > 4){
+            throw new AnoMaiorQueQuatroDigitosException("Ano maior que 4 dígitos: " + t.year());
+            
+        } 
+        this.anoDeLancamento = Integer.valueOf(t.year());
+        this.duracaoEmMinutos = Double.valueOf(t.runtime().substring(0, 3));
     }
 
     public void exibeFichaTecnica(){
@@ -73,7 +87,14 @@ public class Titulos implements Comparable<Titulos> {
     }
 
     @Override
-    public int compareTo(Titulos outroTitulo) {
-        return this.getNome().compareTo(outroTitulo.getNome());
+    public int compareTo(Titulos outro) {
+        return this.getNome().compareTo(outro.getNome());
     }
+
+    @Override
+    public String toString() {
+        return "nome=" + nome + " (" + anoDeLancamento + "), " + duracaoEmMinutos + " min.";
+    }
+
+    
 }
