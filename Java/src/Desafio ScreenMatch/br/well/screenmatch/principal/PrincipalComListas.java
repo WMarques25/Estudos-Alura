@@ -1,6 +1,7 @@
 package br.well.screenmatch.principal;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import br.well.screenmatch.modelos.Filme;
 import br.well.screenmatch.modelos.Serie;
@@ -42,5 +43,8 @@ public class PrincipalComListas {
             if (titulo instanceof Filme f)
                 System.out.println("\nClassificação: " + f.getClassificacao());
         }
+
+        Collections.sort(assistidos);
+        System.out.println(assistidos);
     }
 }
