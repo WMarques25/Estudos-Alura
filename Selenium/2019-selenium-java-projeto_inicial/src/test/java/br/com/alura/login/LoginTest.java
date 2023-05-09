@@ -1,24 +1,51 @@
 package br.com.alura.login;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 public class LoginTest {
+
+    private LoginPage paginaDeLogin;
+
+    @BeforeEach
+    public void beforeEach() {
+        this.paginaDeLogin = new LoginPage();
+    }
+
+    @AfterEach
+    public void afterEach() {
+        this.paginaDeLogin.fechar();
+    }
     
     @Test
     public void deveriaEfetuarLoginComDadosValidos() {
-        System.setProperty("webdriver.chrome.driver","C:/Users/welli/Desktop/GitHub Repositorys/Estudos-Alura/Selenium/2019-selenium-java-projeto_inicial/src/Drivers/chromedriver.exe");
-        WebDriver browser = new ChromeDriver();
-        browser.navigate().to("http://localhost:8080/login");
-        browser.findElement(By.id("username")).sendKeys("fulano");
-        browser.findElement(By.id("password")).sendKeys("pass");
-        browser.findElement(By.id("login-form")).submit();
-
-        Assert.assertFalse(browser.getCurrentUrl().equals("http://localhost:8080/login"));
-        Assert.assertEquals("fulano", browser.findElement(By.id("usuario-logado")).getText());
+        paginaDeLogin.preencheFormularioDeLogin("fulano", "pass");
+        paginaDeLogin.efetuaLogin();
+        
+        Assert.assertFalse(paginaDeLogin.isPaginaDeLogin());
+        Assert.assertEquals("fulano", paginaDeLogin.getNomeUsuarioLogado());
     }
 
+    @Test
+    public void naoDeveriaEfetuarLoginComDadosInvalidos(){
+        paginaDeLogin.preencheFormularioDeLogin("invalido", "4654");
+        paginaDeLogin.efetuaLogin();
+
+        Assert.assertTrue(paginaDeLogin.isPaginaDeLoginError());
+        Assert.assertNull(paginaDeLogin.getNomeUsuarioLogado());
+    }
+
+    @Test
+    public void naoDeveriaAcessarPaginaRestritaSemEstarLogado(){
+        paginaDeLogin.navegaParaPaginaDeLances();
+
+        Assert.assertTrue(paginaDeLogin.isPaginaDeLogin());
+        Assert.assertFalse(paginaDeLogin.contemTexto("Dados do Leilão"));
+    }
 }
