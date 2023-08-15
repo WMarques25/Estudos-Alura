@@ -19,6 +19,6 @@ public class LeiloesTest {
         LoginPage paginaDeLogin = new LoginPage();
         paginaDeLogin.preencheFormularioDeLogin("fulano", "pass");
         this.paginaDeLeiloes = paginaDeLogin.efetuaLogin();
-        paginaDeLeiloes.carregarFormulario();
+        CadastroLeilaoPage paginaDeCadastro = paginaDeLeiloes.carregarFormulario();
     }
 }
