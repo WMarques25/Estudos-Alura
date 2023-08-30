@@ -1,25 +1,17 @@
 package br.com.alura.login;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.chrome.ChromeDriver;
 
+import br.com.alura.leilao.PageObject;
 import br.com.alura.leiloes.LeiloesPage;
 
-public class LoginPage {
+public class LoginPage extends PageObject{
 
     private static final String URL_LOGIN = "http://localhost:8080/login";
-    private ChromeDriver browser;
-    
-    
     
     public LoginPage() {
-        System.setProperty("webdriver.chrome.driver","C:/Users/welli/Desktop/GitHub Repositorys/Estudos-Alura/Selenium/2019-selenium-java-projeto_inicial/src/Drivers/chromedriver.exe");
-        this.browser = new ChromeDriver();
+        super(null);
         browser.navigate().to(URL_LOGIN);
-    }
-
-    public void fechar() {
-        this.browser.quit();
     }
 
     public void preencheFormularioDeLogin(String user, String pass) {

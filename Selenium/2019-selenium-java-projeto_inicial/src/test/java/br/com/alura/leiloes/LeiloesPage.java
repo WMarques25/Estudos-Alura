@@ -4,21 +4,15 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-public class LeiloesPage {
+import br.com.alura.leilao.PageObject;
+
+public class LeiloesPage extends PageObject{
 
     private static final String URL_CADASTRO_LEILAO = "http://localhost:8080/leiloes/new";
     private static final String URL_LEILOES = "http://localhost:8080/leiloes";
-    private ChromeDriver browser;
-    
     
     public LeiloesPage(ChromeDriver browser) {
-        System.setProperty("webdriver.chrome.driver","C:/Users/welli/Desktop/GitHub Repositorys/Estudos-Alura/Selenium/2019-selenium-java-projeto_inicial/src/Drivers/chromedriver.exe");
-        this.browser = browser;
-        // browser.navigate().to(URL_LEILOES);
-    }
-
-    public void fechar() {
-        this.browser.quit();
+        super(browser);
     }
 
     public CadastroLeilaoPage carregarFormulario() {
