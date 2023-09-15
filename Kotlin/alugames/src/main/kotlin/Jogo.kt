@@ -1,5 +1,4 @@
-class Jogo {
-    var titulo = ""
+class Jogo(val titulo: String) {
     var capa = ""
     val descricao = ""
 
