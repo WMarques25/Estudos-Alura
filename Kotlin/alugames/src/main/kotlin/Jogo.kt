@@ -7,3 +7,5 @@ class Jogo(val titulo: String) {
                 "Titulo: '$titulo' \nCapa: '$capa'\nDescricao: '$descricao'"
     }
 }
+
+
