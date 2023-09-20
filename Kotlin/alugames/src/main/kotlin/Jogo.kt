@@ -7,3 +7,5 @@ data class Jogo(val titulo: String, var capa: String) {
                 "Titulo: '$titulo' \nCapa: '$capa'\nDescricao: '$descricao'"
     }
 }
+
+
