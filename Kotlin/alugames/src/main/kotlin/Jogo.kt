@@ -1,5 +1,5 @@
-class Jogo(val titulo: String) {
-    var capa = ""
+data class Jogo(val titulo: String, var capa: String) {
+
     val descricao = ""
 
     override fun toString(): String {
