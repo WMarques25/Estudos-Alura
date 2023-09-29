@@ -31,12 +31,23 @@ fun main() {
 //    } catch (ex: NullPointerException){
 //        println("Jogo não encontrado, tente outro código.")
 //    }
+    var meuJogo:Jogo? = null
 
     val resultado = runCatching {
-        val meuJogo = Jogo(meuInfoJogo.info.title, meuInfoJogo.info.thumb)
-        println(meuJogo)
+        meuJogo = Jogo(meuInfoJogo.info.title, meuInfoJogo.info.thumb)
     }
     resultado.onFailure {
         println("Jogo não encontrado, tente outro código.")
+    }
+    resultado.onSuccess {
+        println("Deseja imserir uma descrição? (S/N)")
+        val opcao = leitura.nextLine()
+        if (opcao.equals("s", true)){
+            println("Digite a descrição: ")
+            meuJogo?.descricao = leitura.nextLine()
+        } else {
+            meuJogo?.descricao = meuJogo?.titulo
+        }
+        println(meuJogo)
     }
 }
