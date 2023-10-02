@@ -13,7 +13,7 @@ Funcionalidade: Propondo lances ao leilao
     Entao os lances sao aceitos
 
   Esquema do Cenario: Propondo um lance invalido
-    Dado um lance invalido de <valor> reais e do usuario 'user'
+    Dado um lance invalido de <valor> reais e do usuario '<user>'
     Quando propoe o lance
     Entao o lance nao eh aceito
 
