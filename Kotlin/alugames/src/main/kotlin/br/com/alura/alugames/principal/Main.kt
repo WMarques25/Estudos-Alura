@@ -1,14 +1,8 @@
 package br.com.alura.alugames.principal
 
-import br.com.alura.alugames.modelo.InfoJogo
 import br.com.alura.alugames.modelo.Jogo
 import br.com.alura.alugames.servicos.ConsumoApi
-import com.google.gson.Gson
-import java.net.URI
-import java.net.http.HttpClient
-import java.net.http.HttpRequest
-import java.net.http.HttpResponse.BodyHandlers
-import java.util.*
+import java.util.Scanner
 
 fun main() {
     val leitura = Scanner(System.`in`)
@@ -17,12 +11,6 @@ fun main() {
 
     val meuInfoJogo = ConsumoApi().buscaJogo(busca)
 
-//    try {
-//        val meuJogo = br.com.alura.alugames.modelo.Jogo(meuInfoJogo.info.title, meuInfoJogo.info.thumb)
-//        println(meuJogo)
-//    } catch (ex: NullPointerException){
-//        println("br.com.alura.alugames.modelo.Jogo não encontrado, tente outro código.")
-//    }
     var meuJogo: Jogo? = null
 
     val resultado = runCatching {
