@@ -2,12 +2,15 @@ package br.com.alura.leilao.acceptance.steps;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import org.junit.Assert;
 
 import br.com.alura.leilao.model.Lance;
 import br.com.alura.leilao.model.Leilao;
 import br.com.alura.leilao.model.Usuario;
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java.Before;
 import io.cucumber.java.pt.Dado;
 import io.cucumber.java.pt.Entao;
@@ -74,12 +77,30 @@ public class PropondoLanceSteps {
 
     @Dado("um lance invalido de {double} reais e do usuario {string}")
     public void um_lance_de_reais(Double valor, String nomeUsuario) {
-        System.out.println(nomeUsuario);
+        // System.out.println(nomeUsuario);
         this.lance = new Lance(new BigDecimal(valor));
     }
 
     @Entao("o lance nao eh aceito")
     public void o_lance_nao_eh_aceito() {
         Assert.assertEquals(0, leilao.getLances().size());
+    }
+
+    @Dado("dois lances")
+    public void dois_lances(DataTable dataTable) {
+        List<Map<String, String>> valores = dataTable.asMaps();
+        for (Map<String, String> mapa : valores) {
+            String valor = mapa.get("valor");
+            String user = mapa.get("user");
+
+            Lance lance = new Lance(new Usuario(user), new BigDecimal(valor));
+            lista.add(lance);
+        }
+    }
+
+    @Entao("o segundo lance nao eh aceito")
+    public void o_segundo_lance_nao_eh_aceito() {
+        Assert.assertEquals(1, leilao.getLances().size());
+        Assert.assertEquals(this.lista.get(0).getValor(), leilao.getLances().get(0).getValor());
     }
 }

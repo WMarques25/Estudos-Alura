@@ -21,3 +21,11 @@ Funcionalidade: Propondo lances ao leilao
     | valor | user |
     | 0.0| fulano |
     | -1.0| beltrano |
+
+  Cenario: Propondo uma sequencia de lances
+    Dado dois lances
+      | valor | user |
+      | 10.0| fulano |
+      | 15.0| fulano |
+    Quando propoe varios lances ao leilao
+    Entao o segundo lance nao eh aceito
