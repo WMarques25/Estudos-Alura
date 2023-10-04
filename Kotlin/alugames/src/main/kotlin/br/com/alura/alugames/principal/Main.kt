@@ -1,11 +1,14 @@
 package br.com.alura.alugames.principal
 
+import br.com.alura.alugames.modelo.Gamer
 import br.com.alura.alugames.modelo.Jogo
 import br.com.alura.alugames.servicos.ConsumoApi
 import java.util.Scanner
 
 fun main() {
     val leitura = Scanner(System.`in`)
+    val gamer = Gamer.criarGamer(leitura)
+    println("Cadastro concluido.\n$gamer")
 
     do {
         print("Digite o codigo do jogo: ")
@@ -19,7 +22,7 @@ fun main() {
             meuJogo = Jogo(meuInfoJogo.info.title, meuInfoJogo.info.thumb)
         }
         resultado.onFailure {
-            println("br.com.alura.alugames.modelo.Jogo não encontrado, tente outro código.")
+            println("Jogo não encontrado, tente outro código.")
         }
         resultado.onSuccess {
             println("Deseja imserir uma descrição? (S/N)")
@@ -30,11 +33,12 @@ fun main() {
             } else {
                 meuJogo?.descricao = meuJogo?.titulo
             }
-            println(meuJogo)
+            gamer.jogosBuscados.add(meuJogo)
         }
         println("Deseja buscar outro jogo? S/N")
         val resposta = leitura.nextLine()
 
     }while (resposta.equals("s", true))
     println("Busca realizada com sucesso!")
+    println(gamer.jogosBuscados)
 }
