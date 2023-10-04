@@ -6,32 +6,35 @@ import java.util.Scanner
 
 fun main() {
     val leitura = Scanner(System.`in`)
-    print("Digite o codigo do jogo: ")
-    val busca = leitura.nextLine()
 
-    val meuInfoJogo = ConsumoApi().buscaJogo(busca)
+    do {
+        print("Digite o codigo do jogo: ")
+        val busca = leitura.nextLine()
 
-    var meuJogo: Jogo? = null
+        val meuInfoJogo = ConsumoApi().buscaJogo(busca)
 
-    val resultado = runCatching {
-        meuJogo = Jogo(meuInfoJogo.info.title, meuInfoJogo.info.thumb)
-    }
-    resultado.onFailure {
-        println("br.com.alura.alugames.modelo.Jogo não encontrado, tente outro código.")
-    }
-    resultado.onSuccess {
-        println("Deseja imserir uma descrição? (S/N)")
-        val opcao = leitura.nextLine()
-        if (opcao.equals("s", true)){
-            println("Digite a descrição: ")
-            meuJogo?.descricao = leitura.nextLine()
-        } else {
-            meuJogo?.descricao = meuJogo?.titulo
+        var meuJogo: Jogo? = null
+
+        val resultado = runCatching {
+            meuJogo = Jogo(meuInfoJogo.info.title, meuInfoJogo.info.thumb)
         }
-        println(meuJogo)
-    }
+        resultado.onFailure {
+            println("br.com.alura.alugames.modelo.Jogo não encontrado, tente outro código.")
+        }
+        resultado.onSuccess {
+            println("Deseja imserir uma descrição? (S/N)")
+            val opcao = leitura.nextLine()
+            if (opcao.equals("s", true)) {
+                println("Digite a descrição: ")
+                meuJogo?.descricao = leitura.nextLine()
+            } else {
+                meuJogo?.descricao = meuJogo?.titulo
+            }
+            println(meuJogo)
+        }
+        println("Deseja buscar outro jogo? S/N")
+        val resposta = leitura.nextLine()
 
-    resultado.onSuccess {
-        println("Busca realizada com sucesso!")
-    }
+    }while (resposta.equals("s", true))
+    println("Busca realizada com sucesso!")
 }
