@@ -39,6 +39,16 @@ fun main() {
         val resposta = leitura.nextLine()
 
     }while (resposta.equals("s", true))
-    println("Busca realizada com sucesso!")
+    println("Jogos buscados:")
     println(gamer.jogosBuscados)
+
+    println("\nJogos Ordenados:")
+    gamer.jogosBuscados.sortBy {
+        it?.titulo
+    }
+
+    gamer.jogosBuscados.forEach {
+        println("Titulo: " + it?.titulo)
+    }
+    println("Busca realizada com sucesso!")
 }
