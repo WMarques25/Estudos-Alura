@@ -23,7 +23,9 @@ public class PetService {
     
     public void listarPetAbrigo() throws IOException, InterruptedException {
         System.out.println("Digite o id ou nome do abrigo:");
-        String idOuNome = new Scanner(System.in).nextLine();
+        Scanner sc = new Scanner(System.in);
+        String idOuNome = sc.nextLine();
+        sc.close();
 
         String uri = "http://localhost:8080/abrigos/" +idOuNome +"/pets";
         HttpResponse<String> response = client.dispararRequisicaoGet(uri);
@@ -49,10 +51,12 @@ public class PetService {
 
     public void importarPetAbrigo() throws IOException, InterruptedException {
         System.out.println("Digite o id ou nome do abrigo:");
-        String idOuNome = new Scanner(System.in).nextLine();
+        Scanner sc = new Scanner(System.in);
+        String idOuNome = sc.nextLine();
 
         System.out.println("Digite o nome do arquivo CSV:");
-        String nomeArquivo = new Scanner(System.in).nextLine();
+        String nomeArquivo = sc.nextLine();
+        sc.close();
 
         BufferedReader reader = null;
         try {

@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.Scanner;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 
 import br.com.alura.client.ClientHttpConfiguration;
 import br.com.alura.domain.Abrigo;
@@ -29,22 +27,35 @@ public class AbrigoService {
         String responseBody = response.body();
         Abrigo[] abrigos = new ObjectMapper().readValue(responseBody, Abrigo[].class);
         List<Abrigo> abrigoList = Arrays.stream(abrigos).toList();
-        System.out.println("Abrigos cadastrados:");
-        for (Abrigo abrigo : abrigoList) {
-            long id = abrigo.getId();
-            String nome = abrigo.getNome();
-            System.out.println(id +" - " +nome);
+
+        if(abrigoList.isEmpty()) {
+            System.out.println("Não há abrigos cadastrados");
+            return;
+        }else {
+            mostrarAbrigos(abrigoList);
+
         }
 
     }
 
+    private void mostrarAbrigos(List<Abrigo> abrigos){
+        System.out.println("Abrigos cadastrados:");
+            for (Abrigo abrigo : abrigos) {
+                long id = abrigo.getId();
+                String nome = abrigo.getNome();
+                System.out.println(id +" - " +nome);
+            }
+    }
+
     public void cadastrarAbrigo() throws IOException, InterruptedException {
+        Scanner sc = new Scanner(System.in);
         System.out.println("Digite o nome do abrigo:");
-        String nome = new Scanner(System.in).nextLine();
+        String nome = sc.nextLine();
         System.out.println("Digite o telefone do abrigo:");
-        String telefone = new Scanner(System.in).nextLine();
+        String telefone = sc.nextLine();
         System.out.println("Digite o email do abrigo:");
-        String email = new Scanner(System.in).nextLine();
+        String email = sc.nextLine();
+        sc.close();
 
         Abrigo abrigo = new Abrigo(nome, telefone, email);
 
