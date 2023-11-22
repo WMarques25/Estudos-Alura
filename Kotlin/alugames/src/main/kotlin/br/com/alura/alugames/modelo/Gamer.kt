@@ -2,6 +2,7 @@ package br.com.alura.alugames.modelo
 
 import java.util.Scanner
 import kotlin.random.Random
+import br.com.alura.alugames.modelo.Jogo
 
 data class Gamer(var nome:String, var email:String) {
     var dataNascimento:String? = null
@@ -47,6 +48,10 @@ data class Gamer(var nome:String, var email:String) {
         } else{
             throw IllegalArgumentException("Email invalido")
         }
+    }
+
+    fun alugaJogo(jogo: Jogo): Aluguel{
+        return Aluguel(this, jogo)
     }
 
     companion object{
