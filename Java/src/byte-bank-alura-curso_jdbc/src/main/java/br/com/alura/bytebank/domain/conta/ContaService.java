@@ -2,7 +2,6 @@ package br.com.alura.bytebank.domain.conta;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
-import java.util.HashSet;
 import java.util.Set;
 
 import br.com.alura.bytebank.ConnectionFactory;
@@ -15,8 +14,6 @@ public class ContaService {
     public ContaService() {
         connection = new ConnectionFactory();
     }
-
-    private Set<Conta> contas = new HashSet<>();
 
     public Set<Conta> listarContasAbertas() {
         Connection conn = connection.recuperarConexao();
@@ -44,7 +41,12 @@ public class ContaService {
             throw new RegraDeNegocioException("Saldo insuficiente!");
         }
 
-        conta.sacar(valor);
+        if(!conta.getEstaAtiva()){
+            throw new RegraDeNegocioException("Conta inativa!");
+        }
+
+        BigDecimal novoValor = conta.getSaldo().subtract(valor);
+        altera(conta, novoValor);
     }
 
     public void realizarDeposito(Integer numeroDaConta, BigDecimal valor) {
@@ -53,7 +55,14 @@ public class ContaService {
             throw new RegraDeNegocioException("Valor do deposito deve ser superior a zero!");
         }
 
-        conta.depositar(valor);
+        BigDecimal novoValor = conta.getSaldo().add(valor);
+
+        altera(conta, novoValor);
+    }
+
+    public void realizarTransferencia(Integer numeroContaOrigem, Integer numeroContaDestino, BigDecimal valor) {
+        this.realizarSaque(numeroContaOrigem, valor);
+        this.realizarDeposito(numeroContaDestino, valor);
     }
 
     public void encerrar(Integer numeroDaConta) {
@@ -62,14 +71,33 @@ public class ContaService {
             throw new RegraDeNegocioException("Conta não pode ser encerrada pois ainda possui saldo!");
         }
 
-        contas.remove(conta);
+        Connection conn = connection.recuperarConexao();
+        new ContaDAO(conn).deletar(numeroDaConta);
+    }
+
+    public void encerrarLogico(Integer numeroDaConta){
+        var conta = buscarContaPorNumero(numeroDaConta);
+        if (conta.possuiSaldo()) {
+            throw new RegraDeNegocioException("Conta não pode ser encerrada pois ainda possui saldo!");
+        }
+
+        Connection conn = connection.recuperarConexao();
+        new ContaDAO(conn).alterarLogico(numeroDaConta);
     }
 
     private Conta buscarContaPorNumero(Integer numero) {
-        return contas
-                .stream()
-                .filter(c -> c.getNumero() == numero)
-                .findFirst()
-                .orElseThrow(() -> new RegraDeNegocioException("Não existe conta cadastrada com esse número!"));
+        Connection conn = connection.recuperarConexao();
+        Conta conta = new ContaDAO(conn).listarPorNumero(numero);
+
+        if (conta != null) {
+            return conta;
+        } else {
+            throw new RegraDeNegocioException("Conta não encontrada!");
+        }
+    }
+
+    private void altera(Conta conta, BigDecimal valor) {
+        Connection conn = connection.recuperarConexao();
+        new ContaDAO(conn).alterar(conta.getNumero(), valor);
     }
 }
