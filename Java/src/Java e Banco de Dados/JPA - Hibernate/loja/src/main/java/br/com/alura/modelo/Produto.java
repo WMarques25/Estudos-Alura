@@ -14,6 +14,8 @@ import javax.persistence.Table;
 @Table(name = "produtos")
 public class Produto {
     
+    public Produto() {
+    }
     public Produto(String nome, String descricao, BigDecimal preco, Categoria categoria) {
         this.nome = nome;
         this.descricao = descricao;

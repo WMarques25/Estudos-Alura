@@ -14,6 +14,9 @@ public class Categoria {
         this.nome = nome;
     }
     
+    public Categoria() {
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
