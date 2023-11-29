@@ -1,6 +1,6 @@
 package br.well.screenmatch.modelos;
 
-import br.well.screenmatch.calculos.Classificavel;
+import calculos.Classificavel;
 
 public class Filme extends Titulos implements Classificavel{
     public Filme(String nome, int anoDeLancamento, boolean incluidoNoPlano) {
