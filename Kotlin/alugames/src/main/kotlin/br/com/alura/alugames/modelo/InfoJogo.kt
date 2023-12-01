@@ -4,4 +4,8 @@ data class InfoJogo(val info: InfoApiShark) {
     override fun toString(): String {
         return info.toString()
     }
+
+    /*fun criaJogo() {
+        TODO("Not yet implemented")
+    }*/
 }
