@@ -1,5 +1,7 @@
 package br.com.alura.alugames.modelo
 
+import br.com.alura.alugames.utilitario.formatoComDuasCasasDecimais
+
 class PlanoAvulso(tipo: String): Plano(tipo){
 
     override fun obterValor(aluguel: Aluguel): Double {
@@ -7,7 +9,7 @@ class PlanoAvulso(tipo: String): Plano(tipo){
         if (aluguel.gamer.media > 8.0){
             return valorOriginal * 0.9
         } else {
-            return valorOriginal
+            return valorOriginal.formatoComDuasCasasDecimais()
         }
     }
 
