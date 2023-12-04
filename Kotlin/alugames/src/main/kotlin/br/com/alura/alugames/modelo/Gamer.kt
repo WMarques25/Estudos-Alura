@@ -20,6 +20,7 @@ data class Gamer(var nome:String, var email:String): Recomendavel {
     var plano:Plano = PlanoAvulso("BRONZE")
     private val listaNotas = mutableListOf<Int>()
     val jogosRecomendados = mutableListOf<Jogo>()
+    var id: Int = 0
 
     override val media: Double
         get() = listaNotas.average().formatoComDuasCasasDecimais()

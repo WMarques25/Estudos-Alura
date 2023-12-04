@@ -2,7 +2,7 @@ package br.com.alura.alugames.modelo
 
 import br.com.alura.alugames.utilitario.formatoComDuasCasasDecimais
 
-class PlanoAvulso(tipo: String): Plano(tipo){
+class PlanoAvulso(tipo: String, id: Int = 0): Plano(tipo, id){
 
     override fun obterValor(aluguel: Aluguel): Double {
         val valorOriginal = super.obterValor(aluguel)

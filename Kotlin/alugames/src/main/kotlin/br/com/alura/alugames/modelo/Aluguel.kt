@@ -6,6 +6,7 @@ data class Aluguel(
     val gamer:Gamer,
     val jogo:Jogo,
     val periodo: Periodo) {
+    var id: Int = 0
     val valorDoAluguel = gamer.plano.obterValor(this).formatoComDuasCasasDecimais()
 
     override fun toString(): String {

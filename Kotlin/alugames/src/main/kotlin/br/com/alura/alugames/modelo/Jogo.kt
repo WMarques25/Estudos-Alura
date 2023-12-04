@@ -12,6 +12,7 @@ data class Jogo(@Expose val titulo: String, @Expose var capa: String): Recomenda
         this.preco = preco.formatoComDuasCasasDecimais()
     }
 
+    var id: Int = 0
     private val listaNotas: MutableList<Int> = mutableListOf()
     var descricao:String? = null
     var preco:Double = 0.0.formatoComDuasCasasDecimais()
