@@ -6,10 +6,12 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import med.voll.api.controller.DadosAtualizacaoPaciente;
 import med.voll.api.endereco.Endereco;
 
 @Table(name = "pacientes")
@@ -37,4 +39,16 @@ public class Paciente {
 
     @Embedded
     private Endereco endereco;
+
+    public void atualizarInformacoes(@Valid DadosAtualizacaoPaciente dados) {
+        if (dados.nome() != null){
+            this.nome = dados.nome();
+        }
+        if (dados.telefone() != null){
+            this.telefone = dados.telefone();
+        }
+        if (dados.endereco() != null){
+            this.endereco.atualizarInformacoes(dados.endereco());
+        }
+    }
 }
