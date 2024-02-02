@@ -1,4 +1,4 @@
-package med.voll.api.domain.usuario;
+package med.voll.api.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
-import med.voll.api.controller.DadosAutenticacao;
+import med.voll.api.domain.usuario.Usuario;
+import med.voll.api.infra.security.DadosAutenticacao;
 import med.voll.api.infra.security.DadosTokenJWT;
 import med.voll.api.infra.security.TokenService;
 
