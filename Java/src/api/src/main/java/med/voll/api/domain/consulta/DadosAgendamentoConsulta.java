@@ -15,4 +15,16 @@ public record DadosAgendamentoConsulta(
     @Future
     LocalDateTime data
 ) {
+
+    public Long medicoId() {
+        return idMedico;
+    }
+
+    public Long pacienteId() {
+        return idPaciente;
+    }
+
+    public LocalDateTime data() {
+        return data;
+    }
 }

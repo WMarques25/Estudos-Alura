@@ -18,7 +18,7 @@ public class ConsultaController {
     @PostMapping
     @Transactional
     public ResponseEntity agendar(@RequestBody @Valid DadosAgendamentoConsulta dados){
-        // System.out.println("Agendando consulta para o médico " + dados.medicoId() + " e o paciente " + dados.pacienteId());
+        System.out.println("Agendando consulta para o médico " + dados.medicoId() + " e o paciente " + dados.pacienteId());
         return ResponseEntity.ok(new DadosDetalhamentoConsulta(null, null, null, null));
     }
 }
