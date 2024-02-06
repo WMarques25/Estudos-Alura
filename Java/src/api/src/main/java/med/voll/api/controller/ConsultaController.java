@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
+import med.voll.api.domain.consulta.AgendaDeConsultas;
 import med.voll.api.domain.consulta.DadosAgendamentoConsulta;
 import med.voll.api.domain.consulta.DadosDetalhamentoConsulta;
 
@@ -15,10 +16,14 @@ import med.voll.api.domain.consulta.DadosDetalhamentoConsulta;
 @RequestMapping("/consultas")
 public class ConsultaController {
 
+    private AgendaDeConsultas agenda;
+
     @PostMapping
     @Transactional
     public ResponseEntity agendar(@RequestBody @Valid DadosAgendamentoConsulta dados){
-        System.out.println("Agendando consulta para o médico " + dados.medicoId() + " e o paciente " + dados.pacienteId());
+        agenda.agendar(dados);
         return ResponseEntity.ok(new DadosDetalhamentoConsulta(null, null, null, null));
     }
+
+    
 }
