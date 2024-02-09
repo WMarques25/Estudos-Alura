@@ -8,6 +8,7 @@ import med.voll.api.domain.medico.Medico;
 import med.voll.api.domain.medico.MedicoRepository;
 import med.voll.api.domain.paciente.PacienteRepository;
 
+@SuppressWarnings("null")
 @Service
 public class AgendaDeConsultas {
 
@@ -22,7 +23,6 @@ public class AgendaDeConsultas {
 
     public void agendar(DadosAgendamentoConsulta dados) {
         
-
         if(!pacienteRepository.existsById(dados.idPaciente())){
             throw new ValidacaoException("Paciente não encontrado");
         }
@@ -32,8 +32,17 @@ public class AgendaDeConsultas {
 
         var paciente = pacienteRepository.findById(dados.idPaciente()).get();
         var medico = escolherMedico(dados);
-        var consulta = new Consulta(null, medico, paciente, dados.data());
+        var consulta = new Consulta(null, medico, paciente, dados.data(), null);
         consultaRepository.save(consulta);
+    }
+
+    public void cancelar(DadosCancelamentoConsulta dados){
+        if(!consultaRepository.existsById(dados.idConsulta())){
+            throw new ValidacaoException("Consulta não encontrada");
+        }
+
+        var consulta = consultaRepository.getReferenceById(dados.idConsulta());
+        consulta.cancelar(dados.motivo());
     }
 
     private Medico escolherMedico(DadosAgendamentoConsulta dados) {
