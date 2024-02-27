@@ -7,18 +7,16 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.Valid;
-import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import med.voll.api.domain.endereco.Endereco;
 
 @Table(name = "pacientes")
-@Entity(name = "paciente")
+@Entity(name = "Paciente")
 @Getter
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
-@AllArgsConstructor
 public class Paciente {
 
     public Paciente(DadosCadastroPaciente dados) {
@@ -27,8 +25,8 @@ public class Paciente {
         this.email = dados.email();
         this.telefone = dados.telefone();
         this.cpf = dados.cpf();
-        this.endereco = new Endereco(dados.endereco()) ;
-       }
+        this.endereco = new Endereco(dados.endereco());
+    }
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

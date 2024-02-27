@@ -9,11 +9,9 @@ import jakarta.validation.constraints.NotNull;
 
 public interface ConsultaRepository extends JpaRepository<Consulta, Long>{
 
-    boolean existsByMedicoAndData(Long idMedico, @NotNull @Future LocalDateTime data);
+    Boolean existsByMedicoIdAndDataAndMotivoCancelamentoIsNull(@NotNull Long idMedico, @NotNull @Future LocalDateTime data);
 
-    boolean existsByPacienteAndDataBetween(@NotNull Long idPaciente, LocalDateTime primeiroHorario,
+    Boolean existsByPacienteIdAndDataBetween(@NotNull Long idPaciente, LocalDateTime primeiroHorario,
             LocalDateTime ultimoHorario);
-
-    
 
 }

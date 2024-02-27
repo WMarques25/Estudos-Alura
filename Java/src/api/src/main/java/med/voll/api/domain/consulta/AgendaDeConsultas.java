@@ -6,12 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import med.voll.api.domain.ValidacaoException;
-import med.voll.api.domain.consulta.validacoes.ValidadorAgendamentoDeConsultas;
+import med.voll.api.domain.consulta.validacoes.agendamento.ValidadorAgendamentoDeConsultas;
+import med.voll.api.domain.consulta.validacoes.cancelamento.ValidadorCancelamentoDeConsulta;
 import med.voll.api.domain.medico.Medico;
 import med.voll.api.domain.medico.MedicoRepository;
 import med.voll.api.domain.paciente.PacienteRepository;
 
-@SuppressWarnings("null")
+// @SuppressWarnings("null")
 @Service
 public class AgendaDeConsultas {
 
@@ -27,7 +28,10 @@ public class AgendaDeConsultas {
     @Autowired
     private List<ValidadorAgendamentoDeConsultas> validadores;
 
-    public void agendar(DadosAgendamentoConsulta dados) {
+    @Autowired
+    private List<ValidadorCancelamentoDeConsulta> validadoresCancelamento;
+
+    public DadosDetalhamentoConsulta agendar(DadosAgendamentoConsulta dados) {
         
         if(!pacienteRepository.existsById(dados.idPaciente())){
             throw new ValidacaoException("Paciente não encontrado");
@@ -40,17 +44,27 @@ public class AgendaDeConsultas {
         
         var paciente = pacienteRepository.findById(dados.idPaciente()).get();
         var medico = escolherMedico(dados);
+        if(medico == null){
+            throw new ValidacaoException("Não foi possível encontrar um médico disponível");
+        }
         var consulta = new Consulta(null, medico, paciente, dados.data(), null);
         consultaRepository.save(consulta);
+
+        return new DadosDetalhamentoConsulta(consulta);
     }
 
-    public void cancelar(DadosCancelamentoConsulta dados){
+    public DadosCancelamentoConsulta cancelar(DadosCancelamentoConsulta dados){
         if(!consultaRepository.existsById(dados.idConsulta())){
             throw new ValidacaoException("Consulta não encontrada");
         }
 
+        validadoresCancelamento.forEach(v -> v.validar(dados));
+
         var consulta = consultaRepository.getReferenceById(dados.idConsulta());
         consulta.cancelar(dados.motivo());
+
+        return new DadosCancelamentoConsulta(consulta);
+
     }
 
     private Medico escolherMedico(DadosAgendamentoConsulta dados) {

@@ -1,9 +1,9 @@
-package med.voll.api.domain.consulta.validacoes;
+package med.voll.api.domain.consulta.validacoes.agendamento;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import jakarta.validation.ValidationException;
+import med.voll.api.domain.ValidacaoException;
 import med.voll.api.domain.consulta.DadosAgendamentoConsulta;
 import med.voll.api.domain.paciente.PacienteRepository;
 
@@ -16,7 +16,7 @@ public class ValidadorPacienteAtivo implements ValidadorAgendamentoDeConsultas{
     public void validar(DadosAgendamentoConsulta dados){
         var pacienteEstaAtivo = repository.findAtivoById(dados.idPaciente());
         if(!pacienteEstaAtivo){
-            throw new ValidationException("Paciente inativo");
+            throw new ValidacaoException("Paciente inativo");
         }
     }
 

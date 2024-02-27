@@ -22,6 +22,8 @@ public interface MedicoRepository extends JpaRepository<Medico, Long>{
                 select c.medico.id from Consulta c
                 where
                 c.data = :data
+            and
+                c.motivoCancelamento is null
             )
             order by rand()
             limit 1
@@ -34,6 +36,6 @@ public interface MedicoRepository extends JpaRepository<Medico, Long>{
             where
             m.id = :id
             """)
-    Boolean findAtivoById(Long idMedico);
+    Boolean findAtivoById(Long id);
 
 }
