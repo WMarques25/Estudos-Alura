@@ -8,11 +8,11 @@ import java.net.http.HttpResponse;
 
 public class ConsumoAPI {
 
-    final String apiKey = System.getenv("API_IMDB_KEY");
+    private final String APIKEY = "&apikey=" + System.getenv("API_IMDB_KEY");
 
     public String obterDados(String endereco){
 
-        endereco = endereco + "&apikey=" + apiKey;
+        endereco = endereco + APIKEY;
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create(endereco))
