@@ -21,7 +21,7 @@ public class Consulta {
                     2 - Carros
                     3 - Caminhões
                 
-                Digite o número correspondente:""");
+                Digite o número correspondente: """);
         var json = consumoAPI.obterMarcas(scan.nextInt());
         
         List<DadosMarcas> marcas = new ArrayList<>();
@@ -30,6 +30,10 @@ public class Consulta {
         marcas.stream()
             .sorted(Comparator.comparing(DadosMarcas::codigo))
             .forEach(System.out::print);
+
+        System.out.print("Digite o código da marca: ");
+        json = consumoAPI.obterModelos(scan.nextInt());
+        System.out.println(json);
     }
 
 }
