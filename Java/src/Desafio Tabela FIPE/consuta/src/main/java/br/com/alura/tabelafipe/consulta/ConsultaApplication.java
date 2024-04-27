@@ -1,16 +1,16 @@
-package br.com.alura.tabelafipe.consuta;
+package br.com.alura.tabelafipe.consulta;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import br.com.alura.tabelafipe.consuta.principal.Consulta;
+import br.com.alura.tabelafipe.consulta.principal.Consulta;
 
 @SpringBootApplication
-public class ConsutaApplication implements CommandLineRunner{
+public class ConsultaApplication implements CommandLineRunner{
 
 	public static void main(String[] args) {
-		SpringApplication.run(ConsutaApplication.class, args);
+		SpringApplication.run(ConsultaApplication.class, args);
 	}
 
 	@Override

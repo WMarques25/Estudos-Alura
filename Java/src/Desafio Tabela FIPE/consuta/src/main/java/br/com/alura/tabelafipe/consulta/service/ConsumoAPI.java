@@ -1,4 +1,4 @@
-package br.com.alura.tabelafipe.consuta.service;
+package br.com.alura.tabelafipe.consulta.service;
 
 import java.io.IOException;
 import java.net.URI;
@@ -7,7 +7,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 public class ConsumoAPI {
-    private final String URL = "https://parallelum.com.br/fipe/api/v1";
+    private final String URL = "https://parallelum.com.br/fipe/api/v1/";
     private String tipoVeiculo;
     
     public String obterMarcas(Integer i){
