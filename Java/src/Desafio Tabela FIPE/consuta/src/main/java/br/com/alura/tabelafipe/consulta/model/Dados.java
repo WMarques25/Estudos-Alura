@@ -1,6 +1,6 @@
 package br.com.alura.tabelafipe.consulta.model;
 
-public record DadosMarcas(
+public record Dados(
     Integer codigo,
     String nome
 ) {
