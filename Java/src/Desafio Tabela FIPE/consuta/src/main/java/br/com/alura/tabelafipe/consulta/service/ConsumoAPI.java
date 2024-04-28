@@ -5,6 +5,8 @@ public class ConsumoAPI {
     private final HttpConfig httpConfig = new HttpConfig();
     private String tipoVeiculo;
     private String marcaVeiculo;
+    private String modeloVeiculo;
+    private String anoVeiculo;
     
     public String obterMarcas(Integer i){
         tipoVeiculo  = obterTipo(i) + "/marcas/";
@@ -33,5 +35,15 @@ public class ConsumoAPI {
         marcaVeiculo = i + "/modelos/";
         return httpConfig.buscar(URL + tipoVeiculo + marcaVeiculo);
 
+    }
+
+    public String obterVersao(Integer i) {
+        modeloVeiculo = i + "/anos/";
+        return httpConfig.buscar(URL + tipoVeiculo + marcaVeiculo + modeloVeiculo);
+    }
+
+    public String obterValor(String nextLine) {
+        anoVeiculo = nextLine + "/";
+        return httpConfig.buscar(URL + tipoVeiculo + marcaVeiculo + modeloVeiculo + anoVeiculo);
     }
 }

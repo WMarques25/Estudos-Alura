@@ -1,7 +1,7 @@
 package br.com.alura.tabelafipe.consulta.model;
 
-public record Dados(
-    Integer codigo,
+public record DadosVersoes(
+    String codigo,
     String nome
 ) {
 
