@@ -54,7 +54,7 @@ public class Principal {
 
         System.out.println("Digite o nome da série: ");
         var nomeSerie = leitura.nextLine().replace(" ", "+");
-        var json = consumoAPI.obterDados(ENDERECO + nomeSerie);
+        var json = consumoAPI.obterDados(ENDERECO + nomeSerie + "&apikey=" + System.getenv("API_IMDB_KEY"));
         var dados = conversor.obterDados(json, DadosSerie.class);
         return dados;
     }
