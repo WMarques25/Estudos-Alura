@@ -6,9 +6,12 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import br.com.alura.screenmatch.model.DadosSerie;
 import br.com.alura.screenmatch.model.DadosTemporada;
 import br.com.alura.screenmatch.model.Serie;
+import br.com.alura.screenmatch.repository.SerieRepository;
 import br.com.alura.screenmatch.service.ConsumoAPI;
 import br.com.alura.screenmatch.service.ConverteDados;
 
@@ -18,6 +21,8 @@ public class Principal {
     private ConsumoAPI consumoAPI = new ConsumoAPI();
     private ConverteDados conversor = new ConverteDados();
     private List<DadosSerie> dadosSeries = new ArrayList<>();
+
+    private SerieRepository repo;
 
     public void exibeMenu() {
         var opcao = -1;
@@ -46,7 +51,9 @@ public class Principal {
 
     private void buscarSerie() {
         DadosSerie dados = getDadosSerie();
-        dadosSeries.add(dados);
+        var serie = new Serie(dados);
+        // dadosSeries.add(dados);
+        repo.save(serie);
         System.out.println(dados);
     }
 
@@ -73,12 +80,13 @@ public class Principal {
     }
 
     private void listarSeriesBuscadas() {
-        List<Serie> series = new ArrayList<>();
-        series = dadosSeries.stream()
-                    .map(d -> new Serie(d))
-                    .collect(Collectors.toList());
+        List<Serie> series = repo.findAll();
         series.stream()
             .sorted(Comparator.comparing(Serie::getGenero))
             .forEach(System.out::println);
+    }
+
+    public Principal(SerieRepository repository){
+        this.repo = repository;
     }
 }
