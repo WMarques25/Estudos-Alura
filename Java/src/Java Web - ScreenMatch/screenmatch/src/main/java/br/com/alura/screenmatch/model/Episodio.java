@@ -16,18 +16,17 @@ public class Episodio {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
-    public Episodio() {}
-
     private Integer temporada;
     private String titulo;
     private Integer numeroEpisodio;
     private Double avaliacao;
     private LocalDate dataLancamento;
-
+    
     @ManyToOne
     private Serie serie;
-
+    
+    public Episodio() {}
+    
     public Serie getSerie() {
         return serie;
     }
@@ -90,6 +89,14 @@ public class Episodio {
             ", Numero Episodio: " + numeroEpisodio + 
             ", Avaliação: " + avaliacao + 
             ", Data de Lancamento: " + dataLancamento;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
 }

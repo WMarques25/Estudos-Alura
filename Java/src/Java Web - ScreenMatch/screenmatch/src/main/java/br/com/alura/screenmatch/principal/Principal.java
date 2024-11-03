@@ -1,13 +1,13 @@
 package br.com.alura.screenmatch.principal;
 
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
-
-import org.springframework.beans.factory.annotation.Autowired;
 
 import br.com.alura.screenmatch.model.Categoria;
 import br.com.alura.screenmatch.model.DadosSerie;
@@ -28,6 +28,8 @@ public class Principal {
     private SerieRepository repo;
 
     private List<Serie> series = new ArrayList<>();
+    private Optional<Serie> serieBuscada;
+    private DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     public void exibeMenu() {
         var opcao = -1;
@@ -42,6 +44,9 @@ public class Principal {
                     6 - Top 5 Series
                     7 - Buscar por Categoria
                     8 - Buscar por Max de Temporadas e Avaliação Minima
+                    9 - Buscar Episodio por trecho
+                    10- Top 5 Episodios
+                    11- Episodios apartir de data
 
                     0 - Sair
                     """;
@@ -59,6 +64,9 @@ public class Principal {
                 case 6 -> buscarTop5Series();
                 case 7 -> buscarPorCategoria();
                 case 8 -> buscarPorTempEAvaliacao();
+                case 9 -> buscarEpisodioPorTrecho();
+                case 10-> buscarTop5Episodios();
+                case 11-> buscarEpisodioDepoisDeData();
                 case 0 -> System.exit(0);
                 default -> System.out.println("Opção inválida");
             }
@@ -68,13 +76,33 @@ public class Principal {
     private void buscarSeriePorTitulo() {
         System.out.println("Escolha uma Serie pelo nome: ");
         var nome = leitura.nextLine();
-        Optional<Serie> serie = repo.findByTituloContainingIgnoreCase(nome);
+        serieBuscada = repo.findByTituloContainingIgnoreCase(nome);
 
-        if (serie.isPresent()) {
-            System.out.println("Dados da serie: \n" + serie.get());
+        if (serieBuscada.isPresent()) {
+            System.out.println("Dados da serie: \n" + serieBuscada.get());
         }else{
             System.out.println("Série não encontrada!");
         }
+    }
+
+    private void buscarEpisodioPorTrecho(){
+        System.out.println("\nDigite o nome do Episodio: ");
+        var episodio = leitura.nextLine();
+        List<Episodio> episodios = repo.episodiosPorTrecho(episodio);
+
+        AtomicReference<String> s = new AtomicReference<>("");
+        episodios.forEach(e -> {
+            if (!s.get().equals(e.getSerie().getTitulo())) {
+                System.out.println("\n-> " + e.getSerie().getTitulo() + ":");
+            }
+            s.set(e.getSerie().getTitulo());
+            System.out.println("\tT" + e.getTemporada() 
+                                + " : E"  + e.getNumeroEpisodio()
+                                + " - " + e.getTitulo()
+                                + " | imdb: " + e.getAvaliacao()
+                                + " | " + e.getDataLancamento()
+                                            .format(dateFormat));
+        });
     }
                 
     private void buscarSerie() {
@@ -183,5 +211,40 @@ public class Principal {
 
     public Principal(SerieRepository repository){
         this.repo = repository;
+    }
+
+    private void buscarTop5Episodios(){
+        buscarSeriePorTitulo();
+        if (serieBuscada.isPresent()){
+            var serie = serieBuscada.get();
+            List<Episodio> eps = repo.topEpisodiosPorSerie(serie);
+
+            AtomicReference<String> s = new AtomicReference<>("");
+            eps.forEach(e -> {
+                if (!s.get().equals(e.getSerie().getTitulo())) {
+                    System.out.println("\n-> " + e.getSerie().getTitulo() + ":");
+                }
+                s.set(e.getSerie().getTitulo());
+                System.out.println("\tT" + e.getTemporada() 
+                                    + " : E"  + e.getNumeroEpisodio()
+                                    + " - " + e.getTitulo()
+                                    + " | imdb: " + e.getAvaliacao()
+                                    + " | " + e.getDataLancamento()
+                                                .format(dateFormat));
+            });
+        }
+    }
+
+    private void buscarEpisodioDepoisDeData(){
+        buscarSeriePorTitulo();
+        if (serieBuscada.isPresent()) {
+            System.out.println("Digite um ano: ");
+            int ano = leitura.nextInt();
+            leitura.nextLine();
+
+            List<Episodio> eps = repo.esodiosPorSerieEAno(ano, serieBuscada.get());
+
+            eps.forEach(System.out::println);
+        }
     }
 }
