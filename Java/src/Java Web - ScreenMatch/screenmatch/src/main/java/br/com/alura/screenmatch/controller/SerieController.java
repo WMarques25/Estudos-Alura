@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.alura.screenmatch.dto.EpisodioDTO;
 import br.com.alura.screenmatch.dto.SerieDTO;
-import br.com.alura.screenmatch.model.Categoria;
-import br.com.alura.screenmatch.model.Serie;
 import br.com.alura.screenmatch.service.SerieService;
 
 @RestController
