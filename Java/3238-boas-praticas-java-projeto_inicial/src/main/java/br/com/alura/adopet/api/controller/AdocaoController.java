@@ -1,20 +1,17 @@
 package br.com.alura.adopet.api.controller;
 
-import br.com.alura.adopet.api.model.Adocao;
-import br.com.alura.adopet.api.model.StatusAdocao;
-import br.com.alura.adopet.api.repository.AdocaoRepository;
-import br.com.alura.adopet.api.service.AdocaoService;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
+import br.com.alura.adopet.api.model.Adocao;
+import br.com.alura.adopet.api.service.AdocaoService;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/adocoes")
