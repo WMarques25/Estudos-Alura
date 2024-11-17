@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import br.com.alura.adopet.api.dto.AprovacaoAdocaoDTO;
 import br.com.alura.adopet.api.dto.ReprovacaoAdocaoDTO;
 import br.com.alura.adopet.api.dto.SolicitacaoAdocaoDTO;
-import br.com.alura.adopet.api.exception.ValidacaoException;
 import br.com.alura.adopet.api.model.Adocao;
 import br.com.alura.adopet.api.model.StatusAdocao;
 import br.com.alura.adopet.api.repository.AdocaoRepository;
@@ -43,12 +42,7 @@ public class AdocaoService {
         // Validações jogam Exceptions caso invalido.
         validacoes.forEach(v -> v.validar(dto));
 
-        var adocao = new Adocao();
-        adocao.setData(LocalDateTime.now());
-        adocao.setStatus(StatusAdocao.AGUARDANDO_AVALIACAO);
-        adocao.setPet(pet);
-        adocao.setTutor(tutor);
-        adocao.setMotivo(dto.motivo());
+        var adocao = new Adocao(tutor, pet, dto.motivo());
 
         repository.save(adocao);
 
@@ -68,7 +62,7 @@ public class AdocaoService {
     public void aprovar(AprovacaoAdocaoDTO dto){
         var adocao = repository.getReferenceById(dto.idAdocao());
 
-        adocao.setStatus(StatusAdocao.APROVADO);
+        adocao.aprovar();
 
         emailService.enviarEmail(
             adocao.getTutor().getEmail(), 
@@ -86,8 +80,7 @@ public class AdocaoService {
 
     public void reprovar(ReprovacaoAdocaoDTO dto){
         var adocao = repository.getReferenceById(dto.idAdocao());
-        adocao.setStatus(StatusAdocao.REPROVADO);
-        adocao.setJustificativaStatus(dto.justificativa());
+        adocao.reprovar(dto.justificativa());
 
         emailService.enviarEmail(
             adocao.getTutor().getEmail(),
